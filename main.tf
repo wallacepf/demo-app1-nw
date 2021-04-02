@@ -57,3 +57,75 @@ module "security_group_db" {
   egress_rules = ["all-all"]
   tags         = var.common_tags
 }
+
+module "security_group_backend" {
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "~>3.0"
+
+  name   = "backend_app1"
+  vpc_id = module.vpc.vpc_id
+
+  ingress_with_cidr_blocks = [
+    {
+      from_port   = 3030
+      to_port     = 3030
+      protocol    = "tcp"
+      description = "Access from public subnets"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      description = "SSH Access"
+      cidr_blocks = "0.0.0.0/0"
+    }
+  ]
+  egress_with_cidr_blocks = [
+    {
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
+      description = "Allow outside traffic"
+      cidr_blocks = "0.0.0.0/0"
+    }
+  ]
+
+  tags = local.common_tags
+}
+
+module "security_group_frontend" {
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "~>3.0"
+
+  name   = "frontend_app1"
+  vpc_id = module.vpc.vpc_id
+
+  ingress_with_cidr_blocks = [
+    {
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      description = "Access from public subnets"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      description = "SSH Access"
+      cidr_blocks = "0.0.0.0/0"
+    }
+  ]
+  egress_with_cidr_blocks = [
+    {
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
+      description = "Allow outside traffic"
+      cidr_blocks = "0.0.0.0/0"
+    }
+  ]
+
+  tags = local.common_tags
+}
