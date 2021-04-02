@@ -15,5 +15,5 @@ output "backend_security_group_id" {
 }
 
 output "frontend_security_group_id" {
-  value = module.security_group_backend.this_security_group_id
+  value = module.security_group_frontend.this_security_group_id
 }
