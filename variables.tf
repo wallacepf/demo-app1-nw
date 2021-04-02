@@ -1,5 +1,9 @@
 variable "common_tags" {
   type = map(string)
+  default = {
+    "Description" : "NW Infra",
+    "Owner" : "NW Team"
+  }
 }
 
 variable "aws_region" {
