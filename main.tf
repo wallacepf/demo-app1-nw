@@ -91,7 +91,7 @@ module "security_group_backend" {
     }
   ]
 
-  tags = local.common_tags
+  tags = var.common_tags
 }
 
 module "security_group_frontend" {
@@ -127,5 +127,5 @@ module "security_group_frontend" {
     }
   ]
 
-  tags = local.common_tags
+  tags = var.common_tags
 }
